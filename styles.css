@@ -1349,6 +1349,65 @@ body.preview-mobile .bottom-nav {
   bottom: calc(10px + env(safe-area-inset-bottom));
 }
 
+body.authenticated:not(.actual-mobile) .demo-page {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  justify-content: center;
+}
+
+body.authenticated:not(.actual-mobile) .demo-intro {
+  justify-self: end;
+  width: min(520px, 100%);
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .demo-intro .eyebrow,
+body.authenticated:not(.actual-mobile) .demo-intro .eyebrow {
+  color: #4359df;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .demo-intro h1,
+body.authenticated:not(.actual-mobile) .demo-intro h1 {
+  max-width: 540px;
+  color: #172235;
+  font-size: clamp(54px, 5.8vw, 86px);
+  line-height: 0.95;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .demo-intro .view-toggle,
+body.authenticated:not(.actual-mobile) .demo-intro .view-toggle {
+  width: fit-content;
+  order: initial;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .demo-intro .view-toggle button,
+body.authenticated:not(.actual-mobile) .demo-intro .view-toggle button {
+  width: auto;
+  min-height: 42px;
+  flex: 0 0 auto;
+  padding: 0 24px;
+}
+
+body.authenticated:not(.actual-mobile) .device-stage {
+  justify-self: start;
+  width: 100%;
+}
+
+body.authenticated:not(.actual-mobile):not(.preview-mobile) .device-frame {
+  width: min(760px, 52vw);
+  min-width: 560px;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .device-frame {
+  width: 390px;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .device-screen {
+  height: 720px;
+  min-height: 720px;
+}
+
 @media (max-width: 760px) {
   .view-toggle { order: 3; width: 100%; }
   .view-toggle button { flex: 1 1 0; }
