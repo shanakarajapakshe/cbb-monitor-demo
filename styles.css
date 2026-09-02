@@ -1482,3 +1482,32 @@ body.authenticated:not(.actual-mobile).preview-mobile .device-screen {
     width: 40px;
   }
 }
+
+@media (min-width: 861px) {
+  body.authenticated:not(.actual-mobile) .demo-page {
+    min-height: 100vh;
+    display: grid !important;
+    grid-template-columns: minmax(360px, 520px) minmax(390px, 760px) !important;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(44px, 7vw, 104px);
+    padding: clamp(42px, 6vw, 80px);
+  }
+
+  body.authenticated:not(.actual-mobile) .demo-mark {
+    display: grid;
+  }
+
+  body.authenticated:not(.actual-mobile) .demo-safe-note {
+    display: grid;
+  }
+
+  body.authenticated:not(.actual-mobile) .device-stage {
+    display: grid;
+    justify-items: center;
+  }
+
+  body.authenticated:not(.actual-mobile).preview-mobile .device-stage {
+    justify-items: start;
+  }
+}
