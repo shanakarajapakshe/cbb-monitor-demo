@@ -118,6 +118,8 @@ body.authenticated {
   z-index: 1;
   display: grid;
   justify-items: center;
+  width: fit-content;
+  max-width: 100%;
   padding-bottom: 96px;
 }
 .device-frame {
@@ -147,9 +149,9 @@ body.authenticated {
 .device-frame::after {
   content: "";
   position: absolute;
-  right: -24px;
+  right: 0;
   bottom: -18px;
-  left: -24px;
+  left: 0;
   height: 20px;
   border-radius: 0 0 26px 26px;
   background: linear-gradient(180deg, #171f2b 0%, #0c121b 100%);
@@ -160,7 +162,7 @@ body.authenticated {
   z-index: 1;
   bottom: 18px;
   left: 50%;
-  width: min(980px, 58vw);
+  width: min(100%, 960px);
   height: 116px;
   transform: translateX(-50%) perspective(760px) rotateX(58deg);
   transform-origin: top center;
@@ -177,7 +179,7 @@ body.authenticated {
   z-index: 2;
   bottom: 72px;
   left: 50%;
-  width: min(760px, 46vw);
+  width: min(82%, 760px);
   height: 42px;
   transform: translateX(-50%) perspective(720px) rotateX(58deg);
   transform-origin: top center;
@@ -1519,10 +1521,10 @@ body.authenticated:not(.actual-mobile).preview-mobile .shell {
 body.authenticated:not(.actual-mobile).preview-mobile .bottom-nav {
   position: sticky;
   right: auto;
-  bottom: 12px;
+  bottom: 10px;
   left: auto;
   width: calc(100% - 28px);
-  margin: -86px auto 12px;
+  margin: -94px auto 10px;
   transform: none;
   box-shadow: 0 16px 36px rgba(18, 34, 49, 0.2);
 }

@@ -507,6 +507,11 @@ function setPreviewMode(mode, persist = true) {
     document.querySelector("#overviewSection")?.classList.add("mobile-active");
     document.querySelector('[data-target="overviewSection"]')?.classList.add("active");
   }
+  const screen = document.querySelector(".device-screen");
+  if (screen) {
+    screen.scrollTop = 0;
+    screen.scrollLeft = 0;
+  }
 }
 
 function setupPreviewToggle() {
