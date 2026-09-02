@@ -1406,6 +1406,38 @@ body.authenticated:not(.actual-mobile).preview-mobile .device-frame {
 body.authenticated:not(.actual-mobile).preview-mobile .device-screen {
   height: 720px;
   min-height: 720px;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .device-screen::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .topbar,
+body.authenticated:not(.actual-mobile).preview-mobile .shell {
+  width: 100%;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .topbar {
+  padding-top: 38px;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .shell {
+  padding-bottom: 120px;
+  overflow-x: hidden;
+}
+
+body.authenticated:not(.actual-mobile).preview-mobile .bottom-nav {
+  position: sticky;
+  right: auto;
+  bottom: 12px;
+  left: auto;
+  width: calc(100% - 28px);
+  margin: -86px auto 12px;
+  transform: none;
+  box-shadow: 0 16px 36px rgba(18, 34, 49, 0.2);
 }
 
 @media (max-width: 760px) {
