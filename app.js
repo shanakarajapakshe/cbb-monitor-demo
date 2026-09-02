@@ -495,14 +495,14 @@ function setupBottomNav() {
   activateView(sections.some((section) => section.id === hashTarget) ? hashTarget : "overviewSection");
 }
 
-function setPreviewMode(mode) {
+function setPreviewMode(mode, persist = true) {
   const isMobile = mode === "mobile";
   document.body.classList.toggle("preview-mobile", isMobile);
   document.querySelector("#desktopViewBtn")?.classList.toggle("active", !isMobile);
   document.querySelector("#mobileViewBtn")?.classList.toggle("active", isMobile);
   document.querySelector("#desktopViewBtn")?.setAttribute("aria-pressed", String(!isMobile));
   document.querySelector("#mobileViewBtn")?.setAttribute("aria-pressed", String(isMobile));
-  localStorage.setItem("demoPreviewMode", isMobile ? "mobile" : "desktop");
+  if (persist) localStorage.setItem("demoPreviewMode", isMobile ? "mobile" : "desktop");
   if (isMobile && !document.querySelector(".shell > section.mobile-active")) {
     document.querySelector("#overviewSection")?.classList.add("mobile-active");
     document.querySelector('[data-target="overviewSection"]')?.classList.add("active");
@@ -510,8 +510,20 @@ function setPreviewMode(mode) {
 }
 
 function setupPreviewToggle() {
-  const savedMode = localStorage.getItem("demoPreviewMode") || "desktop";
-  setPreviewMode(savedMode === "mobile" ? "mobile" : "desktop");
+  const mobileQuery = window.matchMedia("(max-width: 760px)");
+  const applyResponsiveMode = () => {
+    if (mobileQuery.matches) {
+      setPreviewMode("mobile", false);
+      document.body.classList.add("actual-mobile");
+      return;
+    }
+    document.body.classList.remove("actual-mobile");
+    const savedMode = localStorage.getItem("demoPreviewMode") || "desktop";
+    setPreviewMode(savedMode === "mobile" ? "mobile" : "desktop");
+  };
+
+  applyResponsiveMode();
+  mobileQuery.addEventListener?.("change", applyResponsiveMode);
   document.querySelector("#desktopViewBtn")?.addEventListener("click", () => setPreviewMode("desktop"));
   document.querySelector("#mobileViewBtn")?.addEventListener("click", () => setPreviewMode("mobile"));
 }

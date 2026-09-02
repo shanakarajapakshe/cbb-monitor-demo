@@ -1169,4 +1169,41 @@ body.preview-mobile .bottom-nav {
 @media (max-width: 760px) {
   .view-toggle { order: 3; width: 100%; }
   .view-toggle button { flex: 1 1 0; }
+
+  body.actual-mobile.preview-mobile {
+    background: #f3f5f0;
+  }
+
+  body.actual-mobile.preview-mobile .topbar,
+  body.actual-mobile.preview-mobile .shell {
+    width: 100%;
+    max-width: none;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  body.actual-mobile.preview-mobile .topbar {
+    padding-top: calc(14px + env(safe-area-inset-top));
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  body.actual-mobile.preview-mobile .shell {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  body.actual-mobile.preview-mobile .view-toggle {
+    display: none;
+  }
+
+  body.actual-mobile.preview-mobile .topbar-actions {
+    width: auto;
+    flex-wrap: nowrap;
+  }
+
+  body.actual-mobile.preview-mobile .topbar-actions button,
+  body.actual-mobile.preview-mobile .icon-button {
+    width: 40px;
+  }
 }
