@@ -30,6 +30,8 @@ body.authenticated {
   padding: clamp(28px, 6vw, 78px);
 }
 .demo-intro {
+  position: relative;
+  z-index: 5;
   display: grid;
   align-content: center;
   gap: 22px;
@@ -113,6 +115,7 @@ body.authenticated {
 }
 .device-stage {
   position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
   padding-bottom: 96px;
@@ -157,7 +160,7 @@ body.authenticated {
   z-index: 1;
   bottom: 18px;
   left: 50%;
-  width: min(1120px, 68vw);
+  width: min(980px, 58vw);
   height: 116px;
   transform: translateX(-50%) perspective(760px) rotateX(58deg);
   transform-origin: top center;
@@ -174,7 +177,7 @@ body.authenticated {
   z-index: 2;
   bottom: 72px;
   left: 50%;
-  width: min(880px, 54vw);
+  width: min(760px, 46vw);
   height: 42px;
   transform: translateX(-50%) perspective(720px) rotateX(58deg);
   transform-origin: top center;
@@ -1339,8 +1342,12 @@ body.preview-mobile .device-camera span {
 }
 
 body.preview-mobile .device-screen {
+  width: 100%;
+  aspect-ratio: auto;
   height: min(780px, calc(100vh - 86px));
   min-height: 660px;
+  overflow: auto;
+  overflow-x: hidden;
   border-radius: 36px;
 }
 
@@ -1480,8 +1487,12 @@ body.authenticated:not(.actual-mobile).preview-mobile .device-frame {
 }
 
 body.authenticated:not(.actual-mobile).preview-mobile .device-screen {
+  width: 100%;
+  aspect-ratio: auto;
   height: 720px;
   min-height: 720px;
+  max-width: 100%;
+  overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
 }
