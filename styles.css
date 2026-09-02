@@ -119,21 +119,43 @@ body.authenticated {
   position: relative;
   width: min(980px, 58vw);
   min-width: 520px;
-  padding: 16px;
-  border: 12px solid #151c27;
-  border-radius: 24px;
+  padding: 18px 18px 22px;
+  border: 0;
+  border-radius: 26px 26px 18px 18px;
   background: #101722;
-  box-shadow: 0 30px 90px rgba(34, 48, 70, 0.22);
+  box-shadow: 0 32px 90px rgba(34, 48, 70, 0.23);
+}
+.device-frame::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  width: 78px;
+  height: 6px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #263242;
 }
 .device-frame::after {
   content: "";
   position: absolute;
-  right: 17%;
-  bottom: -26px;
-  left: 17%;
-  height: 14px;
+  right: -42px;
+  bottom: -24px;
+  left: -42px;
+  height: 24px;
+  border-radius: 0 0 34px 34px;
+  background: linear-gradient(180deg, #202b3a 0%, #121a26 100%);
+  box-shadow: 0 18px 34px rgba(24, 36, 52, 0.22);
+}
+.device-stage::after {
+  content: "";
+  position: relative;
+  z-index: 2;
+  width: min(760px, 48vw);
+  height: 10px;
+  margin-top: 24px;
   border-radius: 0 0 18px 18px;
-  background: #111824;
+  background: linear-gradient(90deg, #151e2b, #324157 50%, #151e2b);
 }
 .device-camera {
   display: none;
@@ -142,8 +164,16 @@ body.authenticated {
   height: min(720px, calc(100vh - 150px));
   min-height: 560px;
   overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 12px;
   background: var(--bg);
+}
+.device-screen {
+  scrollbar-width: none;
+}
+.device-screen::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 .topbar {
   display: flex;
@@ -1245,6 +1275,14 @@ body.preview-mobile .device-frame::after {
   display: none;
 }
 
+body.preview-mobile .device-frame::before {
+  display: none;
+}
+
+body.preview-mobile .device-stage::after {
+  display: none;
+}
+
 body.preview-mobile .device-camera {
   position: absolute;
   top: 9px;
@@ -1476,7 +1514,9 @@ body.authenticated:not(.actual-mobile).preview-mobile .bottom-nav {
     box-shadow: none;
   }
 
+  body.actual-mobile.preview-mobile .device-frame::before,
   body.actual-mobile.preview-mobile .device-frame::after,
+  body.actual-mobile.preview-mobile .device-stage::after,
   body.actual-mobile.preview-mobile .device-camera {
     display: none;
   }
