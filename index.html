@@ -18,12 +18,27 @@
         <button type="submit">Sign In</button>
         <p id="loginStatus" class="form-status"></p>
       </form>
-    </section>    <header class="topbar">
+    </section>
+    <section class="demo-page" aria-label="Interactive product demo">
+      <aside class="demo-intro">
+        <div class="demo-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="eyebrow">Interactive product demo</p>
+        <h1>Corporate bank balances. Clearly.</h1>
+        <p class="demo-copy">Explore the treasury dashboard directly in your browser. Switch between web and mobile views, filter groups, inspect balances, and test the sample workflows.</p>
+        <div class="demo-safe-note"><strong>Safe demo environment</strong><span>Every balance and account shown here is fictional sample data.</span></div>
+        <div class="view-toggle" role="group" aria-label="Preview layout"><button id="desktopViewBtn" type="button" class="active" aria-pressed="true">Web</button><button id="mobileViewBtn" type="button" aria-pressed="false">Mobile</button></div>
+        <p class="demo-footer">Designed & developed by <strong>Shanaka Rajapakshe</strong></p>
+      </aside>
+      <div class="device-stage">
+        <div class="device-frame">
+          <div class="device-camera" aria-hidden="true"><span></span></div>
+          <div class="device-screen">
+            <header class="topbar">
       <div>
         <p class="eyebrow">Treasury dashboard</p>
         <h1>Corporate Bank Balance Monitor</h1>
       </div>
-      <div class="topbar-actions"><div class="view-toggle" role="group" aria-label="Preview layout"><button id="desktopViewBtn" type="button" class="active" aria-pressed="true">Desktop</button><button id="mobileViewBtn" type="button" aria-pressed="false">Mobile</button></div><span id="currentUser" class="current-user"></span><button id="refreshBtn" class="icon-button" aria-label="Refresh balances" title="Refresh balances"><span>R</span></button><button id="logoutBtn" class="icon-button" aria-label="Logout" title="Logout"><span>L</span></button></div>
+      <div class="topbar-actions"><span id="currentUser" class="current-user"></span><button id="refreshBtn" class="icon-button" aria-label="Refresh balances" title="Refresh balances"><span>R</span></button><button id="logoutBtn" class="icon-button" aria-label="Logout" title="Logout"><span>L</span></button></div>
     </header>
 
     <main class="shell">
@@ -204,6 +219,10 @@
       <a class="bottom-nav-item" href="#actionsSection" data-target="actionsSection"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18"></path><path d="M3 12h18"></path><path d="M5 5l14 14"></path><path d="M19 5L5 19"></path></svg></span><strong>Actions</strong></a>
       <a class="bottom-nav-item superadmin-only" href="#adminSection" data-target="adminSection"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c1.5-4 14.5-4 16 0"></path><path d="M19 8v4"></path><path d="M21 10h-4"></path></svg></span><strong>Admin</strong></a>
     </nav>
+          </div>
+        </div>
+      </div>
+    </section>
     <script src="demo_data.js"></script><script src="app.js"></script>
   </body>
 </html>
