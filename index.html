@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f766e" />
+    <title>Corporate Bank Balance Monitor Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section id="loginScreen" class="login-screen" aria-label="Login">
+      <form id="loginForm" class="login-card">
+        <p class="eyebrow">Secure access</p>
+        <h1>Corporate Bank Balance Monitor</h1>
+        <p class="login-copy">Demo mode uses sample data. Sign in with any username and password.</p>
+        <label>Username<input id="loginUsername" name="username" autocomplete="username" required /></label>
+        <label>Password<span class="password-field"><input id="loginPassword" name="password" type="password" autocomplete="current-password" required /><button id="togglePasswordBtn" type="button" class="password-toggle" aria-label="Show password" title="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="3"></circle><line class="eye-slash" x1="4" y1="4" x2="20" y2="20"></line></svg></button></span></label>
+        <button type="submit">Sign In</button>
+        <p id="loginStatus" class="form-status"></p>
+      </form>
+    </section>    <header class="topbar">
+      <div>
+        <p class="eyebrow">Treasury dashboard</p>
+        <h1>Corporate Bank Balance Monitor</h1>
+      </div>
+      <div class="topbar-actions"><div class="view-toggle" role="group" aria-label="Preview layout"><button id="desktopViewBtn" type="button" class="active" aria-pressed="true">Desktop</button><button id="mobileViewBtn" type="button" aria-pressed="false">Mobile</button></div><span id="currentUser" class="current-user"></span><button id="refreshBtn" class="icon-button" aria-label="Refresh balances" title="Refresh balances"><span>R</span></button><button id="logoutBtn" class="icon-button" aria-label="Logout" title="Logout"><span>L</span></button></div>
+    </header>
+
+    <main class="shell">
+      <section id="overviewSection" class="metrics" aria-label="Overview">
+        <article class="metric-card primary">
+          <span>Total Cash Consolidated</span>
+          <strong id="totalCash">LKR 0.00</strong>
+          <small id="freshness">Waiting for data</small>
+        </article>
+        <article class="metric-card">
+          <span>Accounts Updated</span>
+          <strong id="activeAccounts">0/0</strong>
+          <small>Latest available balances</small>
+        </article>
+        <article class="metric-card warning">
+          <span>Potentially Stale</span>
+          <strong id="staleAccounts">0</strong>
+          <small>Older than yesterday</small>
+        </article>
+        <article class="metric-card danger">
+          <span>Missing Balances</span>
+          <strong id="missingAccounts">0</strong>
+          <small>Accounts without balance data</small>
+        </article>
+        <article class="metric-card highlight">
+          <span>Highest Balance</span>
+          <strong id="highestBalance">-</strong>
+          <small id="highestBalanceMeta">No LKR balance yet</small>
+        </article>
+        <article class="metric-card">
+          <span>Bank Coverage</span>
+          <strong id="bankCoverage">0</strong>
+          <small>Configured banks monitored</small>
+        </article>
+      </section>
+
+      <section id="chartsSection" class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Visual Insights</h2>
+            <p>Liquidity distribution, bank exposure, account purpose, and balance trends.</p>
+          </div>
+        </div>
+        <div class="chart-controls">
+          <label>Group<select id="chartGroupSelect" aria-label="Chart group filter"></select></label>
+          <label>Account Purpose<select id="purposeToggle" aria-label="Account purpose filter"><option value="all">All Accounts</option><option value="operational">Operational</option><option value="special">Money Market / Special Funds</option></select></label>
+          <label>Trend Range<select id="trendDaysSelect" aria-label="Trend date range"><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="7">Last 7 days</option></select></label>
+        </div>
+        <div class="chart-grid treasury-grid">
+          <article class="chart-card wide">
+            <div class="chart-card-head"><h3>Group-wise Cash Distribution</h3><span>Total pool share</span></div>
+            <div id="groupDistributionChart" class="mini-chart"></div>
+          </article>
+          <article class="chart-card">
+            <div class="chart-card-head"><h3>Company-wise Breakdown</h3><span>Selected group</span></div>
+            <div id="companyBreakdownChart" class="mini-chart"></div>
+          </article>
+          <article class="chart-card">
+            <div class="chart-card-head"><h3>Bank Exposure & Share</h3><span>Liquidity risk view</span></div>
+            <div id="bankExposureChart" class="mini-chart"></div>
+          </article>
+          <article class="chart-card">
+            <div class="chart-card-head"><h3>Foreign Currency Monitor</h3><span>USD / GBP accounts</span></div>
+            <div id="foreignCurrencyChart" class="mini-chart"></div>
+          </article>
+          <article class="chart-card">
+            <div class="chart-card-head"><h3>Special Purpose Accounts</h3><span>Operational vs funds</span></div>
+            <div id="purposeChart" class="mini-chart"></div>
+          </article>
+          <article class="chart-card wide">
+            <div class="chart-card-head"><h3>Group-wise Trend</h3><span>Daily totals by group</span></div>
+            <div id="groupTrendChart" class="chart compact-chart"></div>
+          </article>
+          <article class="chart-card wide">
+            <div class="chart-card-head"><h3>Deep-Dive Trend Filter</h3><span>Group / company / account</span></div>
+            <div class="trend-filters">
+              <select id="trendGroupSelect" aria-label="Trend group filter"></select>
+              <select id="trendCompanySelect" aria-label="Trend company filter"></select>
+              <select id="trendAccountSelect" aria-label="Trend account filter"></select>
+            </div>
+            <div id="deepDiveTrendChart" class="chart compact-chart"></div>
+          </article>
+          <article class="chart-card wide">
+            <div class="chart-card-head"><h3>Bank-wise Net Trend</h3><span>Stacked area by bank</span></div>
+            <div id="bankTrendChart" class="chart compact-chart"></div>
+          </article>
+        </div>
+      </section>
+      <section id="balancesSection" class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Latest Bank Balances</h2>
+            <p id="statusText">Loading balances...</p>
+          </div>
+          <select id="groupFilter" aria-label="Filter by group"></select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Group</th>
+                <th>Company</th>
+                <th>Bank</th>
+                <th>Account</th>
+                <th>Type</th>
+                <th>Balance</th>
+                <th>Statement Date</th>
+                <th>Last Updated</th>
+              </tr>
+            </thead>
+            <tbody id="balanceRows"></tbody>
+          </table>
+        </div>
+        <div id="balanceCards" class="balance-cards" aria-label="Mobile balance cards"></div>
+      </section>
+
+      <section id="actionsSection" class="panel split triple">
+        <div>
+          <div class="panel-head">
+            <div>
+              <h2>Balance Trend</h2>
+              <p>Last 30 days by selected account.</p>
+            </div>
+            <select id="accountFilter" aria-label="Select account"></select>
+          </div>
+          <div id="chart" class="chart" role="img" aria-label="Balance trend chart"></div>
+        </div>
+        <form id="uploadForm" class="upload-panel">
+          <h2>Manual Override</h2>
+          <label>Account<select id="uploadAccount" name="account_id"></select></label>
+          <label>Statement PDF<input id="pdfFile" type="file" name="file" accept="application/pdf" /></label>
+          <button type="submit">Parse and Save</button>
+          <p id="uploadStatus"></p>
+        </form>
+        <form id="balanceForm" class="upload-panel">
+          <h2>Quick Balance Entry</h2>
+          <label>Account<select id="balanceAccount" name="account_id"></select></label>
+          <label>Statement Date<input id="balanceDate" type="date" name="statement_date" /></label>
+          <label>Closing Balance<input id="balanceAmount" type="number" step="0.01" min="0" name="closing_balance" placeholder="0.00" /></label>
+          <button type="submit">Save Balance</button>
+          <p id="balanceStatus"></p>
+        </form>
+      </section>
+
+      <section id="adminSection" class="panel admin-panel superadmin-only">
+        <div class="panel-head">
+          <div>
+            <h2>Admin Panel</h2>
+            <p>Manage system users and access roles.</p>
+          </div>
+        </div>
+        <div class="admin-grid">
+          <form id="userForm" class="upload-panel">
+            <h2>User Management</h2>
+            <input id="userId" type="hidden" />
+            <label>Username<input id="userUsername" name="username" autocomplete="off" required /></label>
+            <label>Password<input id="userPassword" name="password" type="password" autocomplete="new-password" placeholder="Leave blank when editing" /></label>
+            <label>Role<select id="userRole" name="role"><option value="viewer">Viewer</option><option value="admin">Admin</option><option value="superadmin">Superadmin</option></select></label>
+            <label class="checkbox-row"><input id="userActive" type="checkbox" checked /> Active user</label>
+            <div class="form-actions"><button type="submit">Save User</button><button id="clearUserFormBtn" type="button" class="secondary-button">Clear</button></div>
+            <p id="userStatus" class="form-status"></p>
+          </form>
+          <div class="admin-list-card">
+            <div class="panel-head compact">
+              <div><h2>Users</h2><p id="userListStatus">Loading users...</p></div>
+            </div>
+            <div id="usersList" class="users-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+    <nav class="bottom-nav" aria-label="Primary mobile navigation">
+      <a class="bottom-nav-item active" href="#overviewSection" data-target="overviewSection"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h6V4H4v9Zm10 7h6V4h-6v16ZM4 20h6v-4H4v4Z"></path></svg></span><strong>Overview</strong></a>
+      <a class="bottom-nav-item" href="#chartsSection" data-target="chartsSection"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15l3-4 3 2 4-7"></path></svg></span><strong>Charts</strong></a>
+      <a class="bottom-nav-item" href="#balancesSection" data-target="balancesSection"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path><path d="M7 15h4"></path><path d="M15 15h2"></path></svg></span><strong>Balances</strong></a>
+      <a class="bottom-nav-item" href="#actionsSection" data-target="actionsSection"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18"></path><path d="M3 12h18"></path><path d="M5 5l14 14"></path><path d="M19 5L5 19"></path></svg></span><strong>Actions</strong></a>
+      <a class="bottom-nav-item superadmin-only" href="#adminSection" data-target="adminSection"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c1.5-4 14.5-4 16 0"></path><path d="M19 8v4"></path><path d="M21 10h-4"></path></svg></span><strong>Admin</strong></a>
+    </nav>
+    <script src="demo_data.js"></script><script src="app.js"></script>
+  </body>
+</html>
